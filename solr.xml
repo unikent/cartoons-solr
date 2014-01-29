@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<solr sharedLib="lib" persistent="true">
+	<cores adminPath="/admin/cores" hostPort="${jetty.port:8983}" hostContext="${hostContext:solr}">
+		<core default="true" instanceDir="verdi" name="verdi"/>
+		<core default="false" instanceDir="solr-records" name="solr-records"/>
+    	<core default="false" instanceDir="solr-cartoons" name="solr-cartoons"/>
+		<core default="false" instanceDir="solr-records-2" name="solr-records-2"/>
+    	<core default="false" instanceDir="solr-cartoons-2" name="solr-cartoons-2"/>
+	</cores>
+</solr>
