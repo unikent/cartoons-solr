@@ -28,7 +28,7 @@
 
 <solr>
 
-  <int name="coreLoadThreads">5</str>
+  <int name="coreLoadThreads">5</int>
   <str name="sharedLib">lib/</str>
   <str name="managementPath">/admin/cores</str>
 
