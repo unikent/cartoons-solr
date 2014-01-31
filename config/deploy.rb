@@ -4,6 +4,7 @@ set :repository,  "git@github.com:unikent/SOLR-Config.git"
 role :frontend, "homburg", "sombrero"
 role :processing, "butch"
 
+set :app_path, "/opt/solr/app/example"
 set :shared_path, "/opt/solr/shared"
 set :releases_path, "/opt/solr/releases"
 set :current_path, "/opt/solr/current"
@@ -27,15 +28,26 @@ set :copy_compression, :zip
 after "deploy", "deploy:create_symlink"
 
 namespace :deploy do
-  task :start do ; end
-  task :stop do ; end
-  task :restart do ; end
+  task :start do
+    #run "cd #{app_path} && nohup java -jar start.jar > /opt/solr/shared/app.log 2>&1 &", :roles => :frontend
+  end
+
+  task :stop do
+    #run "/usr/ucb/ps -auxwww | grep jetty | grep -v grep | awk '{print $2}' | xargs kill -KILL", :roles => :frontend
+  end
+
+  task :restart do
+    stop
+    start
+  end
+
   task :setup do
     run "mkdir -p #{releases_path}"
     indexes.each do |p|
       run "mkdir -p #{shared_path}/indexes/#{p}"
     end
   end
+
   task :create_symlink do
   	run "rm -f #{current_path} && ln -s #{latest_release} #{current_path}"
     indexes.each do |p| 
@@ -43,6 +55,7 @@ namespace :deploy do
       run "ln -s #{shared_path}/indexes/#{p} #{current_path}/#{p}/data/index"
     end
   end
+
   task :finalize_update do
   end
 end
