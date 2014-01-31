@@ -1,13 +1,2 @@
 # Solr Index files
-*.fdt
-*.fdx
-*.fnm
-*.nvd
-*.nvm
-*.si
-*.doc
-*.pos
-*.tim
-*.tip
-*.gen
-segments_*
+*/data/index
