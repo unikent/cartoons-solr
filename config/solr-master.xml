@@ -28,7 +28,7 @@
 
   <solrcloud>
     <str name="host">${host:}</str>
-    <int name="hostPort">${jetty.port:8983}</int>
+    <int name="hostPort">${jetty.port:8080}</int>
     <str name="hostContext">${hostContext:solr}</str>
     <int name="zkClientTimeout">${zkClientTimeout:15000}</int>
     <bool name="genericCoreNodeNames">${genericCoreNodeNames:true}</bool>
@@ -38,5 +38,16 @@
     <int name="socketTimeout">${socketTimeout:0}</int>
     <int name="connTimeout">${connTimeout:0}</int>
   </shardHandlerFactory>
+
+  <requestHandler name="/replication" class="solr.ReplicationHandler" >
+      <lst name="master">
+          <!--Replicate on 'startup' and 'commit'. 'optimize' is also a valid value for replicateAfter. -->
+          <str name="replicateAfter">startup</str>
+          <str name="replicateAfter">commit</str>
+      </lst>
+
+      <!-- keep only 1 backup.  Using this parameter precludes using the "numberToKeep" request parameter. (Solr3.6 / Solr4.0)-->
+      <str name="maxNumberOfBackups">1</str> 
+  </requestHandler>
 
 </solr>

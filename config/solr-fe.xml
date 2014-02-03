@@ -28,7 +28,7 @@
 
   <solrcloud>
     <str name="host">${host:}</str>
-    <int name="hostPort">${jetty.port:8983}</int>
+    <int name="hostPort">${jetty.port:8080}</int>
     <str name="hostContext">${hostContext:solr}</str>
     <int name="zkClientTimeout">${zkClientTimeout:15000}</int>
     <bool name="genericCoreNodeNames">${genericCoreNodeNames:true}</bool>
@@ -39,4 +39,16 @@
     <int name="connTimeout">${connTimeout:0}</int>
   </shardHandlerFactory>
 
+  <requestHandler name="/replication" class="solr.ReplicationHandler" >
+      <lst name="slave">
+
+          <!--fully qualified url to the master core. It is possible to pass on this as a request param for the fetchindex command-->
+          <str name="masterUrl">http://butch:8080/solr</str>
+
+          <!--Interval in which the slave should poll master .Format is HH:mm:ss . If this is absent slave does not poll automatically.
+           But a fetchindex can be triggered from the admin or the http API -->
+          <str name="pollInterval">00:01:00</str>
+
+       </lst>
+  </requestHandler>
 </solr>
