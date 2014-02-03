@@ -454,6 +454,19 @@
      <str name="echoHandler">true</str>
     </lst>
   </requestHandler>
+
+  <requestHandler name="/replication" class="solr.ReplicationHandler" >
+      <lst name="slave">
+
+          <!--fully qualified url to the master core. It is possible to pass on this as a request param for the fetchindex command-->
+          <str name="masterUrl">http://butch:8080/solr/solr-records-2</str>
+
+          <!--Interval in which the slave should poll master .Format is HH:mm:ss . If this is absent slave does not poll automatically.
+           But a fetchindex can be triggered from the admin or the http API -->
+          <str name="pollInterval">00:01:00</str>
+
+       </lst>
+  </requestHandler>
   
   <highlighting>
    <!-- Configure the standard fragmenter -->

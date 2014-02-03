@@ -52,10 +52,8 @@ namespace :deploy do
     indexes.each do |p| 
       run "mkdir -p #{current_path}/#{p}/data"
       run "ln -s #{shared_path}/indexes/#{p} #{current_path}/#{p}/data/index"
+      run "rm -f #{latest_release}/#{p}/conf/solrconfig.xml && ln -s #{latest_release}/#{p}/conf/solrconfig-master.xml #{latest_release}/#{p}/conf/solrconfig.xml", :roles => :processing
     end
-
-    run "ln -s #{latest_release}/config/solr-master.xml #{latest_release}/solr.xml", :roles => :processing
-    run "ln -s #{latest_release}/config/solr-fe.xml #{latest_release}/solr.xml", :roles => :frontend
   end
 
   task :finalize_update do
